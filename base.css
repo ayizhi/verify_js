@@ -1,0 +1,949 @@
+/*
+系统共用部分
+*/
+@charset "utf-8";
+body {
+    color: #333333;
+    font-family: "Microsoft YaHei", sans-serif;
+    font-size: 13px;
+    direction: ltr;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-rendering: optimizelegibility;
+}
+
+/* 内外边距通常让各个浏览器样式的表现位置不同 */
+body,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+p,
+blockquote,
+button,
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+menu,
+nav,
+section {
+    margin: 0;
+    padding: 0;
+}
+
+/* 重设 HTML5 标签, IE 需要在 js 中 createElement(TAG) */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+menu,
+nav,
+section {
+    display: block;
+}
+
+/*表格外层嵌套 隐藏超出部分*/
+.table-scrollable {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-top: 22px;
+}
+
+/* 去掉各Table cell 的边距并让其边重合 */
+table.dataTable {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+table.dataTable thead tr {
+    background: #4dbcb0;
+    color: #ffffff;
+}
+
+table.dataTable tbody tr[data-href] {
+    cursor: pointer;
+}
+
+table.dataTable thead tr th {
+    color: #ffffff;
+    line-height: 40px;
+    padding: 0px 15px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+table.dataTable td {
+    line-height: 30px;
+    padding: 10px 15px;
+    color: #666666;
+    white-space: nowrap;
+}
+
+table.dataTable tbody tr:hover td {
+    background-color: #f3f3f3 !important;
+}
+
+table.dataTable tr:nth-child(2n) {
+    background: #F6F6F6;
+}
+
+table.dataTable td .btn {
+    line-height: 20px;
+    padding: 4px 10px;
+    height: 20px;
+    line-height: 20px;
+}
+
+.paging_simple_numbers span > span {
+    padding: 4px 15px;
+    display: inline-block;
+    text-align: center;
+    min-width: 1.5em;
+    box-sizing: border-box;
+    text-decoration: none !important;
+    cursor: pointer;
+    color: #4dbcb0 !important;
+    border-left: 1px solid #cacaca;
+    line-height: 20px;
+    margin-left: -1px;
+
+}
+
+ul,
+ol {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+/* 去除默认边框 */
+img {
+    border: 0;
+}
+
+/* 统一上标和下标 */
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+}
+
+:root sub,
+:root sup {
+    vertical-align: baseline;
+    /* for ie9 and other modern browsers */
+}
+
+sup {
+    top: -0.5em;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+/* 让链接在 hover 状态下显示下划线 */
+a {
+    color: #4dbcb0;
+    text-decoration: none;
+    outline: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/* 强制文本换行 */
+.textwrap,
+.textwrap td,
+.textwrap th {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.textwrap-table {
+    table-layout: fixed;
+}
+
+/* Responsive images */
+.a img {
+    max-width: 100%;
+}
+
+/* icons */
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    color: #5AC0B3;
+}
+
+.btn .fa {
+    color: #ffffff;
+}
+
+.btn {
+    border: none;
+    padding: 0px 15px;
+    line-height: 34px;
+    height: 34px;
+    outline: none;
+    background: #44b6ae;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.btn:link, .btn:visited, .btn:hover, .btn:active {
+    color: #ffffff;
+}
+
+.btn:hover, .btn:active {
+    background: #419D93;
+}
+
+.btn[disabled='disabled'] {
+    opacity: 0.8;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+}
+
+input[type="text"], input[type="password"], input[type="tel"], input[type="number"], input[type="email"] {
+    height: 34px;
+    line-height: 34px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+.error, .help-block-error {
+    color: #a94442;
+    line-height: 24px;
+    margin: 0px 0px 0px 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+.align-right {
+    text-align: right;
+}
+
+/*清除浮动*/
+.clearfix:before, .clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* 表单item相关 */
+.reg-input {
+    width: 96%;
+    padding: 0px 2%;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-bg {
+    background: #ffffff;
+    border-radius: 5px;
+    padding: 0px 5px 0px 30px;
+    position: relative;
+    margin: 0px;
+}
+
+.input-bg .fa {
+    position: absolute;
+    left: 10px;
+    top: 12px;
+}
+
+.input-bg input[type="text"] {
+    width: 100%;
+    outline: none;
+}
+
+.input-bg.half {
+    margin-right: 110px;
+}
+
+.input-group .input-group-btn {
+    width: 100px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+.input-group .input-group-btn .btn {
+    width: 100px;
+}
+
+.create-account {
+    margin-top: 13px;
+    margin-bottom: 13px;
+}
+
+.field-passwordresetrequestform-verifycode .input-bg {
+    margin-right: 130px;
+}
+
+.field-passwordresetrequestform-verifycode .input-group-btn {
+    width: 120px;
+}
+
+.field-passwordresetrequestform-verifycode #code-send-btn {
+    width: 120px;
+}
+
+/*
+    右上角提示框
+*/
+#promptBox {
+    position: fixed;
+    border-radius: 5px;
+    z-index: 100000;
+    right: 20px;
+    top: 30px;
+    max-width: 200px;
+    padding: 12px 25px;
+    box-shadow: 0 0 3px #999;
+    opacity: 0.8;
+    color: #ffffff;
+    background: #44b6ae;
+    display: none;
+}
+
+#promptBox.success {
+    background: #51a351;
+}
+
+#promptBox.error {
+    background: #bd362f;
+}
+
+#promptBox.info {
+    background: #2f96b4;
+}
+
+#promptBox.warning {
+    background: #f89406;
+}
+
+/*
+ *  带遮罩 对话弹框
+*/
+#dialog {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 9999;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#dialog .dialog-bg {
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    position: fixed;
+    background: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+#dialog .dialog-body {
+    background: #ffffff;
+    position: relative;
+    width: 800px;
+    left: 50%;
+    top: 50px;
+    margin-left: -400px;
+    border-radius: 5px;
+    z-index: 100;
+    padding-bottom: 60px;
+}
+
+#dialog .dialog-body .dialog-head {
+    background: #44b6ae;
+    color: #ffffff;
+    line-height: 40px;
+    font-size: 16px;
+    padding: 5px 20px 0px;
+    margin: 0px;
+    border-radius: 5px 5px 0 0;
+}
+
+#dialog .dialog-body .dialog-main {
+    padding: 10px 20px 0;
+    line-height: 30px;
+    min-height: 100px;
+    overflow-y: auto;
+}
+
+#dialog .dialog-body .dialog-foot {
+    position: absolute;
+    width: 100%;
+    height: 55px;
+    left: 0px;
+    bottom: 0px;
+    border-top: #cccccc solid 1px;
+    text-align: right;
+}
+
+#dialog .dialog-body .dialog-foot a {
+    display: inline-block;
+    padding: 0px 15px;
+    text-align: center;
+    line-height: 32px;
+    margin-right: 20px;
+    margin-top: 10px;
+    border-radius: 3px;
+    background: #44b6ae;
+    color: #ffffff;
+}
+
+#dialog .dialog-body .dialog-foot a.cancel {
+    background: #aaaaaa;
+
+}
+
+/*
+ *  小弹窗  不带绿色header
+ */
+#popup {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 9999;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#popup .popup-bg {
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    position: fixed;
+    background: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+#popup .popup-body {
+    background: #ffffff;
+    position: relative;
+    width: 400px;
+    min-height: 200px;
+    left: 50%;
+    top: 50px;
+    margin-left: -200px;
+    border-radius: 5px;
+    z-index: 100;
+    padding-bottom: 60px;
+}
+
+#popup .popup-head {
+    color: #666666;
+    line-height: 40px;
+    font-size: 16px;
+    padding: 5px 20px 0px;
+    margin: 0px;
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0 1px 1px #ccc;
+}
+
+#popup .popup-main {
+    padding: 10px 20px 0;
+    line-height: 30px;
+    max-height: 460px;
+    overflow-y: auto;
+}
+
+#popup .popup-foot {
+    position: absolute;
+    width: 100%;
+    height: 55px;
+    left: 0px;
+    bottom: 0px;
+    box-shadow: 0 -1px 1px #ccc;
+    text-align: right;
+}
+
+#popup .popup-foot a {
+    display: inline-block;
+    padding: 0px 15px;
+    text-align: center;
+    line-height: 32px;
+    margin-right: 20px;
+    margin-top: 10px;
+    border-radius: 3px;
+    background: #44b6ae;
+    color: #ffffff;
+}
+
+#popup .popup-foot a.cancel {
+    background: #aaaaaa;
+}
+
+/* 弹窗 右上角 关闭按钮 */
+.closePopBtn {
+    position: absolute;
+    right: -1px;
+    top: 0px;
+    width: 34px;
+    height: 34px;
+    border-radius: 0px 5px 0px 20px;
+    background: #000000;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    text-align: right;
+    line-height: 40px;
+}
+
+.closePopBtn .fa {
+    font-size: 20px;
+    color: #ffffff;
+    padding-right: 8px;
+}
+
+/*表单元素重定义*/
+select {
+    display: inline-block;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+select[disabled="disabled"], select[disabled="true"] {
+    background-color: #f1f1f1;
+    color: #999999;
+}
+
+select.fullWidth {
+    width: 100%;
+}
+
+.form-item .full-txt {
+    padding: 0px 1%;
+    width: 98%;
+    border: #cccccc solid 1px;
+}
+
+/*datepicker 样式修改*/
+.ui-widget-header {
+    border: 1px solid #4dbcb0;
+}
+
+.ui-datepicker table tbody tr:nth-child(2n) {
+    background: #ffffff;
+}
+
+.ui-datepicker table thead tr th {
+    padding: .7em .3em;
+    text-align: center;
+    font-weight: bold;
+    border: 0;
+    background: #ffffff;
+    color: #000;
+    line-height: normal;
+    min-width: auto;
+}
+
+.ui-datepicker table tr th:first-child,
+.ui-datepicker table tr td:first-child {
+    padding: 0px;
+}
+
+.ui-datepicker table tr:nth-last-child(2n) {
+    background: transparent;
+}
+
+.ui-datepicker table tr td {
+    width: 44px;
+    height: 26px;
+    line-height: normal;
+    padding: 0px;
+}
+
+.ui-datepicker table tr td a {
+    text-align: center;
+    margin-right: 1px;
+}
+
+.ui-datepicker table tr td a.ui-state-default {
+    background: #ffffff;
+}
+
+.ui-datepicker table tr td a.ui-state-default:hover {
+    background: #eeeeee;
+}
+
+.ui-datepicker table tr td a.ui-state-active {
+    background: #4DBCB0;
+    color: #ffffff;
+    border: 1px solid #4dBcB0;
+}
+
+.ui-datepicker table tr td a.ui-state-highlight {
+    border: 1px solid #4dBcB0;
+}
+
+.ui-datepicker table tr td a.ui-state-active:hover {
+    background: #3a9c95;
+    border: 1px solid #3a9c95;
+}
+
+/*题头文案*/
+.note {
+    margin: 0 0 20px;
+    padding: 15px 30px 15px 15px;
+    border-left: 5px solid #eee;
+    border-radius: 0 4px 4px 0;
+}
+
+.note.note-info {
+    background-color: #eefffd;
+    border-color: #eefffd;
+    color: #31708f;
+}
+
+.note.note-info {
+    color: #333;
+}
+
+.note.note-warning {
+    background-color: #fcf8e3;
+    border-color: #f2cf87;
+    color: #8a6d3b;
+}
+
+.note.note-info p {
+    margin: 0 0 10px;
+}
+
+.bg-green-haze {
+    border-color: #44b6ae !important;
+    background-image: none !important;
+    background-color: #44b6ae !important;
+    color: #FFF !important;
+}
+
+.label {
+    text-shadow: none !important;
+    font-size: 13px;
+    font-weight: 300;
+    padding: 3px 6px;
+    color: #fff;
+    font-family: "Microsoft YaHei", sans-serif;
+    border-radius: .25em;
+}
+
+/*灰色面板样式 */
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.panel-default {
+    border-color: #e0e0e0;
+}
+
+.panel .panel-heading {
+    color: #333333;
+    background-color: #f9f9f9;
+    border-color: #e0e0e0;
+    padding: 10px 15px;
+    border-bottom: 1px solid #e0e0e0;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.panel .panel-heading .panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    color: inherit;
+}
+
+.panel .panel-heading .panel-title label {
+    font-weight: 400;
+    font-size: 14px;
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+}
+
+.panel .panel-body {
+    padding: 15px;
+}
+
+/*津贴显示的按钮 */
+.btn-group {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    position: relative;
+    float: left;
+}
+
+.btn-default:hover {
+    color: #333;
+    background-color: #ededed;
+    border-color: #b3b3b3;
+}
+
+.btn-sm {
+    padding: 4px 10px 5px 10px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.btn-left-no-radius {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    margin-left: -1px;
+}
+
+.btn-right-no-radius {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+/*错误页面样式 */
+.page-404 {
+    font-size: 16px;
+    color: #999999;
+    min-height: 550px;
+    text-align: center;
+    line-height: 300px;
+}
+
+/* 弹窗只有一行提醒时  */
+.short-alerts-txt {
+    color: #999999;
+    font-size: 18px;
+    line-height: 30px;
+    padding: 30px 10px;
+    text-align: center;
+}
+
+.popup-main .short-alerts-txttwo {
+     display: inline-block;
+     color: #999999;
+ }
+
+
+
+/* 无权限页面蒙板 */
+.form-body {
+    position: relative;
+}
+
+.popWindow {
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    filter: alpha(opacity=50);
+    opacity: .5;
+    z-index: 99999;
+    position: absolute;
+}
+
+/*纯粹的Table样式*/
+.pure-table-scrollable {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+table.pure-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    clear: both;
+    width: 100%;
+    cursor: pointer;
+}
+
+table.pure-table thead tr {
+    background: #4dbcb0;
+    color: #ffffff;
+}
+
+table.pure-table thead tr th {
+    color: #ffffff;
+    line-height: 40px;
+    padding: 0px 15px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+table.pure-table td {
+    line-height: 30px;
+    padding: 10px 15px;
+    color: #666666;
+    white-space: nowrap;
+}
+
+table.pure-table tr:nth-child(2n) {
+    background: #F6F6F6;
+}
+
+/*table 有边框*/
+table.table-border,
+table.table-border td,
+table.table-border th {
+    border: 1px solid #ccc;
+}
+
+table.table-border td {
+    border: 1px solid #ccc;
+}
+
+/* 表格  报表等  没有内容时的样式 */
+.short-text-p {
+    text-align: center;
+    padding-top: 30px;
+    font-size: 18px;
+    color: #999999;
+}
+
+/*顶部prompt（低版本ie与noscript）*/
+.javascript-required,
+.modern-browser-required {
+    position: relative;
+    width: 100%;
+    padding: 15px 0;
+    background-color: #fcf8e3;
+    color: #8a6d3b;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* sidebar */
+/* new item */
+.new-item {
+    position: relative;
+}
+
+.new-item:after {
+    content: url(../img/new_item.png);
+    position: absolute;
+    top: -15px;
+}
+
+/* cnzz display none */
+#cnzz_stat_icon_1257985102,
+#cnzz_stat_icon_1257985013 {
+    display: none;
+}
+
+/*员工基本工资没设置时  各种样式及弹窗*/
+.noBasepay-employee{
+    color: red;
+}
+.setBasePayDialog .form-item{
+    padding:12px 0;
+
+}
+.setBasePayDialog div.input-box{
+    width: 290px;
+    float: left;
+}
+.setBasePayDialog div.input-box input{
+    float: left;
+}
+.setBasePayDialog .error-text{
+    float: right;
+    width: 290px;
+    padding: 0px;
+    line-height: 24px;
+
+}
+.setBasePayDialog label{
+    width: 130px;
+    float: left;
+    text-align: right;
+}
+.setBasePayDialog .needBubbleTip{
+    float: left;
+    font-size: 20px;
+}
+.setBasePayDialog input,.setBasePayDialog select{
+    width: 240px !important;
+    padding: 0px 6px;
+    border: #ccc solid 1px;
+}

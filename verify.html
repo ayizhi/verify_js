@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+
+
+<div class="rows name">
+    <label class="form-label col-3"><span class="required"> * </span>姓名</label>
+    <div class="input-box col col-6">
+        <i class="fa fa-user"></i>
+        <input type="text" class="form-input input-with-icon vf-require"  name="name" data-verify="require input-length" data-name="姓名" data-min="2" data-max="20" placeholder="2-20个字符" value="asd">
+    </div>
+</div>
+
+<div class="rows name">
+    <label class="form-label col-3"><span class="required"> * </span>密码</label>
+    <div class="input-box col col-6">
+        <i class="fa fa-user"></i>
+        <input type="text" class="form-input input-with-icon vf-require vf-password"  name="password"  data-name="密码" data-min="2" data-max="20" placeholder="2-20个字符" value="asd">
+    </div>
+</div>
+<div class="rows name">
+    <label class="form-label col-3"><span class="required"> * </span>重复密码</label>
+    <div class="input-box col col-6">
+        <i class="fa fa-user"></i>
+        <input type="text" class="form-input input-with-icon vf-require vf-password-confirm"  name="password"  data-name="密码" data-min="2" data-max="20" placeholder="2-20个字符" value="asd">
+    </div>
+</div>
+<div class="rows name">
+    <label class="form-label col-3"><span class="required"> * </span>number</label>
+    <div class="input-box col col-6">
+        <i class="fa fa-user"></i>
+        <input type="text" class="form-input input-with-icon vf-require vf-number" name="number"  data-name="整数"  value="asd">
+    </div>
+</div>
+<div class="rows name">
+    <label class="form-label col-3"><span class="required"> * </span>float</label>
+    <div class="input-box col col-6">
+        <i class="fa fa-user"></i>
+        <input type="text" class="form-input input-with-icon vf-require vf-float" name="float"  data-name="小数"  value="asd">
+    </div>
+</div>
+
+
+
+</body>
+
+<script src = 'jquery-1.7.2.min.js'></script>
+<script src = 'verify.js'></script>
+
+</html>
