@@ -30,6 +30,8 @@
 
 //前面需要加verify-,只有require前不需要
 //define(['/plugins/jquery.min.js','/js/popWin.js'],function(){
+//uploader to git
+
     ['password','password-confirm','number','float','all-number','phone','tel','email','verify-code','identify-code','bank-card','input-length','custom','date','org-code','value-area','username','date-md','password-original','password-old','adjust-date','positiveInteger','100float','http']
 
     var ErrorType = {
