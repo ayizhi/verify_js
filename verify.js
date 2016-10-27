@@ -36,8 +36,6 @@
 
     var ErrorType = {
         'required' : require,
-        'password' : verifyPassWord,
-        'password-confirm' : verifyPassWordConfirm,
         'number' : verifyNumber,
         'float' : verifyFloat,
         'positiveInteger' : verifyPositiveInteger,
@@ -57,20 +55,8 @@
         'org-code' : verifyOrgCode,
         'username' : verifyUsername,
         'date-md' : verifyDateMd,
-        'password-original' : verifyPassWordOriginal,
-        'password-old' : verifyPassWordOld,
-        'password-old-change' : verifyPassWordOldChange,
         'adjust-date' : verifyAdjustDate,
         'http' : verifyHttp,
-        'first-contract-begin':firstContractBeginDate,
-        'first-contract-end':firstContractEndDate,
-        'now-contract-beigin':nowContractBeginDate,
-        'now-contract-end':nowContractEndDate,
-        'entrance-yearmo':entranceYearmo,
-        'graduation-yearmo':graduationYearmo,
-        'lenovo-department':departmentLenovo,
-        'lenovo-director':directorLenovo,
-        'insurance-num':insuranceNum,
 
 
     }
@@ -214,6 +200,7 @@
         return true;
 
     }
+
     function verifyDateMd(verifyName,type){
         var obj = this;
         var objVal = $(this).val();
@@ -248,32 +235,8 @@
         clearError(this,type);
         return true;
     }
-    function verifyAdjustDate(veifyName,type){
-        var obj = this;
-        var objVal = $(this).val();
-        var id = $(obj).data("id");
-        var data = {
-            'data[employee_id]':id,
-            'data[adjust_time]':objVal,
-            'data[yearmo]' : $("#datepicker-yearmo").val(),
-            'type':"payroll-transaction",
-            'scenario':"adjust",
-            '_csrf': $("meta[name=csrf-token]").attr("content")
-        };
 
-        $.ajax({
-            type: 'POST',
-            url: '/site/ajax-validate.html',
-            data: data,
-            success: function (data) {
-                clearError(this,type);
-                if(true != data.status){
-                    showError(this,type,data.data.errors.adjust_time);
-                    return false;
-                }
-            }
-        });
-    }
+
 
 //身份证
     function verifyIdentity(verifyName,type){
@@ -295,67 +258,10 @@
             showError(t,type,"身份证号格式错误!");
         }else if(!regularCheck(this,type,/(^\d{18}$)|(^\d{17}(\d|X|x)$)/,"身份证号格式错误！")){
             return;
-        }else{
-            $.ajax({
-                url:'/employee/ajax-validate-idcode.html',
-                type:'get',
-                data:{
-                    'idcode':objVal,
-                    'employee_id':employeeId
-                },
-                success:function(reply){
-                    if(!reply.status){
-                        showAjaxError(faDom,type,reply.message.slice(7));
-                    }else{
-                        clearAjaxError(faDom,type)
-                        var curYear = (new Date()).getFullYear();
-                        var age = curYear - birthYear - 1
-                        var birth_Month = birthMonth.length == 2 ? birthMonth + 1 : '0' + parseInt(birthMonth + 1);
-                        var birth_Day = birthday.length == 2 ? birthday : '0' + birthday;
-                        var theBirthDay = birth_Month + birth_Day;
-                        var constellation = reply.data['constellation'];
-                        var sexual = $.trim(objVal).split("")[16]%2 == 0 ? 2 : 1;
-
-
-                        if($('#gender').val() == 0 || $('#gender').val() == ''){
-                            $('#gender').val(sexual).attr('value',sexual);
-                        }
-                        if($('#birthday').val() == '' ||$('#birthday').val() == '0'){
-                            $('#birthday').val(theBirthDay)
-                        }
-                        if($('#age').val() == '' || $('#age').val() == '0'){
-                            $('#age').val(age);
-                        }
-                        if($('#constellation').val() == 0 || $('#constellation').val() == ""){
-                            $('#constellation').val(constellation).attr('value',constellation)
-                        }
-                    }
-                }
-            })
-        }
-
-
-
-    }
-
-//组织机构
-    function verifyOrgCode(verifyName,type){
-        var objVal = $(this).val()
-        if(orgcodevalidate(objVal)){
-            showError(this,type,"组织机构代码证输入错误");
-        }else {
-            clearError(this,type);
         }
     }
 
-//自定义
-    function verifyCustom(verifyName,type){
-        var obj = this;
-        var rule_input = $(obj).data("rule");
-        var text = $(obj).data("text");
-        var rule = new RegExp(rule_input);
-        regularCheck(obj,type,rule,text)
-    }
+
 
 //输入长度范围
     function verifyInputLength(verifyName,type){
@@ -398,40 +304,14 @@
             valueCheck("mid",min,max,obj,verifyName,type)
         }
     }
-//设置手机号
 
+//设置手机号
     function verifyPhoneNum(verifyName,type){
         var obj = this,
             faDom = $(this).parent('.input-box'),
             phoneNum = $(obj).val();
         if(!regularCheck(obj,type,/^1[3-9][0-9]\d{8}$/,"请输入正确手机号！")) {
             return
-        }else {
-            //格式正确,验证是否后台有该手机号码
-            var verifyAjax = parseInt($(obj).data("ajax"));//0 否 1 是
-            if(verifyAjax == 0 || verifyAjax == undefined){
-                //不用去验证
-                clearError(this,type);
-                return true;
-            }else if(verifyAjax == 1){
-                //后台判重
-                $.ajax({
-                    type: 'get',
-                    url: '/employee/ajax-validate-mobile.html',
-                    data: {'mobile':phoneNum},
-                    success: function (reply) {
-                        if(!reply.status){
-                            //被占用
-                            showAjaxError(faDom,type,'手机号已存在或不可用');
-                            return false;
-                        }else {
-                            //没被占用
-                            clearAjaxError(faDom,type);
-                            return true;
-                        }
-                    }
-                });
-            }
         }
     }
 
@@ -440,22 +320,6 @@
         var obj = this;
         if(!regularCheck(obj,type,/^1[3-9][0-9]\d{8}$/,"请输入正确手机号！")) {
             return
-        }else {
-            //格式正确,验证是否后台有该手机号码
-            var verifyAjax = Number($(obj).data("ajax"));//0 否 1 是
-            var verifyAjaxUpdate = Number($(obj).attr("data-ajaxUpdate"));//0 否 1 是  更改手机号时的新手机号
-            if(verifyAjax == 0 || verifyAjax == undefined){
-                //不用去验证
-                clearError(this,type);
-                return true;
-            }else if(verifyAjax == 1){
-                if(verifyAjaxUpdate == 1){ //验证新手机号
-                    commonAjax("new_mobile",obj,type);
-                    return;
-                }
-                //后台判重
-                commonAjax("mobile",obj,type);
-            }
         }
     }
 
@@ -464,19 +328,6 @@
         var obj = this;
         if(!regularCheck(obj,type,/^([a-zA-Z0-9._-]){2,18}@([a-zA-Z0-9_-]){1,60}\.([a-zA-Z0-9._-]){1,15}$/,"请输入正确邮箱！")){ // @前18个字符，大小写、数字、.-_; @后第一个.前 60个大小写、数字_-，第一个.后15个字符，大小写、数字、.-_
             return
-        }else {
-            //格式正确,验证是否后台有该邮箱号
-            var verifyAjax = Number($(obj).data("ajax"));//0 否 1 是
-            //var verifyAjaxUpdate = Number($(obj).attr("data-ajaxUpdate"));//0 否 1 是
-            if(verifyAjax == 0 || verifyAjax == undefined){
-                //不用去验证
-                clearError(this,type);
-                return true;
-            }else if(verifyAjax == 1){
-                //后台判重
-                //公司设置中的管理员邮箱判重
-                commonAjax("email",obj,type);
-            }
         }
     }
 
@@ -488,164 +339,7 @@
         regularCheck(this,type,myregex,verifyName + "必须符合http格式")
     }
 
-//password
-    function verifyPassWord(verifyName,type){
-    //密码验证和重复密码验证绑定
-    var obj = this;
-    var name = $(obj).attr("name");
-    var pwd = $("input[name="+name+"]").val();
-    var pwd_cfm = $("input[name=confirm_"+name+"]").val();
-    var verifyAjax = $("input[name="+name+"]").attr('data-ajax');
-    if(pwd && !pwd_cfm){
-        //没有输入重复密码
-        //正常验证
-        if(regularCheck(obj,type,/^[0-9a-zA-Z]{8,20}$/,"密码应为8-20位数字和字母组合！") && regularCheck(obj,type,/\d+/,"密码应为8-20位数字和字母组合") &&regularCheck(obj,type,/[a-zA-Z]+/,"密码应为8-20位数字和字母组合")) {
-            //验证通过
-            clearError(this,type);
-            return true
-        
-        }else {
-            return false;
-        }
-    }else if(pwd && pwd_cfm){
-        //都存在
-        //先验证密码位数
-        if(regularCheck(obj,type,/^[0-9a-zA-Z]{8,20}$/,"密码应为8-20位数字和字母组合")){
-            //密码位数验证通过
-            //ajax here
-            //前端验证通过,判断是否要去后端验证
-            if(verifyAjax == 0 || verifyAjax == undefined){
-                //验证通过
-                //验证两次密码是否一致
-                var another_parent = $("input[name="+name+"]").parent(".input-box");
-                var another_grandfather = $("input[name=confirm_"+name+"]").closest(".rows");
-                if(pwd != pwd_cfm){
-                    //两次不一致，焦点移到confirm并报错
-                    another_parent.find(".error-text").remove();
-                    var error = $("<div class='error-text'></div>");
-                    error.text("两次输入密码不一致！");
-                    another_parent.append(error);
-                    another_grandfather.addClass("has-error");
-                    return false;
-                }else{
-                    //密码一致，没问题，清除报错信息
-                    clearError(this,type);
-                    another_parent.find(".error-text").remove();
-                    another_grandfather.removeClass("has-error");
-                    return true;
-                }
-            }else if(verifyAjax == 1){
-                //ajax
-                passwordAjax(true,obj,type);
-            }
-        }
-    }
-}
 
-//passwordOriginal
-    function verifyPassWordOriginal(verifyName,type){
-        var obj = this;
-        var objVal = $(this).val();
-        var employee = $(obj).data("employee");
-        var url = "/site/ajax-validate-account-info.html";
-        var data = {
-            'data[password]' :stringToHex(objVal),
-            'scenario' : "change_password",
-            '_csrf' : $("meta[name=csrf-token]").attr("content")
-        };
-        if(employee == "1"){
-            url = "/employee-center/ajax-validate-password-correctness.html";
-            data = {
-                'password' :stringToHex(objVal),
-                '_csrf' : $("meta[name=csrf-token]").attr("content")
-            }
-        }
-
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: data,
-            success: function (data) {
-                if(!data.status){
-                    //原始密码错误
-                    showError(obj,type,"原始密码输入错误!");
-                    return false;
-                }else {
-                    //原始密码正确
-                    clearError(obj,type);
-                    return true;
-                }
-            }
-        });
-    }
-
-//passwordConfirm
-    function verifyPassWordConfirm(verifyName,type){
-        var obj = this;
-        var objVal = $(this).val();
-        var name = $(obj).attr("name");
-        var pwd = $("input[name="+name.substr(8)+"]").val();
-        //var pwd = $(this).val();
-        if(pwd){
-            if(pwd != objVal){
-                showError(obj,type,"两次输入密码不一致!");
-                return false;
-            }else {
-                clearError(obj,type);
-                return true;
-            }
-        }else{
-            showError(obj,type,"请先输入密码!");
-            return false;
-        }
-    }
-
-//passwordOld
-    function verifyPassWordOld(verifyName,type){
-        var obj = this;
-        var objVal = $(obj).val();
-        if(objVal.length < 6){//老密码
-            showError(obj,type,"登录密码不可以少于6位!");
-        } else {
-            clearError(obj,type);
-            return true;
-        }
-    }
-
-//passwordOld change
-function verifyPassWordOldChange(verifyName,type){
-    var obj = this;
-    var objVal = $(obj).val();
-    var ajax = $(obj).attr('data-ajax');//ajax ==1 验证密码
-    if(objVal.length < 6){//老密码
-        showError(obj,type,"登录密码不可以少于6位!");
-    } else {
-        if(ajax == 1){
-            var data = {
-                'data[password]' :stringToHex(objVal),
-                'scenario' : "change_password",
-                'type':"account",
-                '_csrf' : $("meta[name=csrf-token]").attr("content")
-            };
-            $.ajax({
-                type: 'POST',
-                url: '/site/ajax-validate.html',
-                data: data,
-                success: function (data) {
-                    if(!data.status){
-                        //原始密码错误
-                        showError(obj,type,"原始密码输入错误!");
-                        return false;
-                    }else {
-                        //原始密码正确
-                        clearError(obj,type);
-                        return true;
-                    }
-                }
-            });
-        }
-    }
-}
 //require验证
     function require(verifyName,type){
         var t = this;
@@ -1036,61 +730,6 @@ function verifyPassWordOldChange(verifyName,type){
     }
 
 //密码的ajax后台判断
-    function passwordAjax(status,obj,type){
-        var repassword = false;
-        var objVal = $(obj).val();
-        if(status == true){
-            //清空重复密码
-            repassword = true;
-        }
-
-        var employee = $(obj).data("employee");
-        var site = "site";
-        if(employee == "1"){
-            site = "employee-center";
-        }
-
-        $.ajax({
-            type: 'POST',
-            url: '/'+ site +'/ajax-validate.html',
-            data: "data[password]=" + objVal + "&_csrf=" + $("meta[name=csrf-token]").attr("content") + "&scenario=account&type=register",
-            success: function (data) {
-                if(!data.status){
-                    //密码强度不通过
-                    showError(obj,type,data.data.errors.password);
-                    return false;
-                }else {
-                    //通过
-                    if(repassword == true){
-                        //验证两次密码是否一致
-                        var name = $(obj).attr("name");
-                        var pwd = $("input[name="+name+"]").val();
-                        var pwd_cfm = $("input[name=confirm_"+name+"]").val();
-                        var another_parent = $("input[name=confirm_"+name+"]").parent(".input-box");
-                        var another_grandfather = $("input[name=confirm_"+name+"]").closest(".rows");
-                        if(pwd != pwd_cfm){
-                            //两次不一致，焦点移到confirm并报错
-                            another_parent.find(".error-text").remove();
-                            var error = $("<div class='error-text'></div>");
-                            error.text("两次输入密码不一致！");
-                            another_parent.append(error);
-                            another_grandfather.addClass("has-error");
-                            return false;
-                        }else{
-                            //密码一致，没问题，清除报错信息
-                            clearError(obj,type);
-                            another_parent.find(".error-text").remove();
-                            another_grandfather.removeClass("has-error");
-                            return true;
-                        }
-                    }else {
-                        clearError(obj,type);
-                        return true;
-                    }
-                }
-            }
-        });
-    }
 
 //指定id的input报错
     function showErrorWithId(id,text){
