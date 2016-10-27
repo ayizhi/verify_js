@@ -3,12 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="base.css">
 </head>
 <body>
-
+<div class="input-box">
+    <label for="">姓名</label>
+    <input id="name" type="text" async class="vf-required vf-input-length" data-min="2" data-max="10">
+</div>
+<div class="input-box">
+    <label for="">年龄</label>
+    <input  type="text" class="vf-required vf-area-value" data-min="2" data-max="10">
+</div>
+<div class="input-box">
+    <label for="">爱好</label>
+    <input type="text" class=" vf-input-length" data-min="0" data-max="30">
+</div>
 </body>
 <script src="jquery-1.7.2.min.js"></script>
-<script src="base.css"></script>
-<script src="form.css"></script>
+<script src="verify.js"></script>
+<script src="index.js"></script>
 
 </html>
